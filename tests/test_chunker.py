@@ -1,5 +1,5 @@
 import pytest
-from src.chunker import chunk_fixed
+from src.chunker import chunk_fixed, validate_arguments
 
 def test_chunk_fixed_empty_string():
     assert chunk_fixed("") == []
@@ -67,3 +67,30 @@ def test_real_corpus():
 
     assert len(chunks) > 1
     assert all(len(chunk) <= 1000 for chunk in chunks)
+
+def test_validate_arguments():
+    with pytest.raises(ValueError):
+        validate_arguments(0, 0)
+
+    with pytest.raises(ValueError):
+        validate_arguments(-1, 0)
+
+    with pytest.raises(ValueError):
+        validate_arguments(10, -1)
+
+    with pytest.raises(ValueError):
+        validate_arguments(10, 10)
+
+@pytest.mark.parametrize(
+    "size, overlap",
+    [
+        (0, 0),      # size <= 0
+        (-1, 0),     # size <= 0
+        (10, -1),    # overlap < 0
+        (10, 10),    # overlap >= size
+        (10, 11),    # overlap >= size
+    ],
+)
+def test_validate_arguments(size, overlap):
+    with pytest.raises(ValueError):
+        validate_arguments(size, overlap)

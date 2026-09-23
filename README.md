@@ -1,21 +1,26 @@
-# rag-eval
+# RAG Evaluation
 
-## What this system answers
+A hand-written fixed-size text chunker implemented in Python for evaluating
+chunking behavior on a real text corpus.
 
-[Write one sentence describing the question this system answers and what documents it uses.]
+## Current implementation
+
+The project currently includes a fixed-size character chunker with:
+
+- 1000-character chunks
+- 200-character overlap
+- Input validation
+- Deterministic output
+- Pytest test coverage
 
 ## Corpus
 
-- Source:
-- Number of documents:
-- Where they come from:
-- License:
+The original corpus is stored in `data/input.txt`.
 
-## Status
+For experimentation, the corpus was also divided into 50 files,
+with 800 lines per file.
 
-Day 1. Retrieval only, no generation yet. Eval harness not started.
+## Observation
 
-## How to run
-
-```text
-Commands will be added as the project is implemented.
+Fixed-size character chunking maintains the requested overlap, but it can
+split words or sentences at arbitrary character boundaries.
